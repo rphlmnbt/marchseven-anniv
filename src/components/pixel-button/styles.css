@@ -1,0 +1,15 @@
+.pixel-button {
+    background-color: #7364af;
+    padding: 8px;
+    height: auto;
+    font-size: 2em;
+    border-radius: 8px;
+    color: #ffffff;
+    border: 6px solid #803f28;
+    font-family: 'Pixelify Sans';
+}
+
+.pixel-button:hover {
+    background-color: #7f73ae;
+    cursor: pointer;
+}
