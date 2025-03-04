@@ -1,0 +1,35 @@
+.background-diary {
+    /* background-color: #f9bed8; */
+    background-image: url('../../assets/notebook.jpg');
+    /* background-repeat: no-repeat; */
+    height: 100vh;
+    width: 100vw;
+}
+
+.table-of-contents {
+    margin: 36px;
+    padding: 16px;
+    background-color: #dfdccb;
+    border-radius: 24px;
+    border: 3px dashed black;
+}
+
+.table-of-contents-title {
+    text-align: center;
+    font-size: 24px;
+    font-weight: 500;
+}
+
+.mantine-List-itemLabel {
+    font-size: 20px !important;
+    cursor: default;
+}
+
+.month-item div .mantine-List-itemLabel {
+    font-size: 20px !important;
+    cursor: pointer;
+}
+
+.month-item div .mantine-List-itemLabel:hover {
+    color: gray;
+}

@@ -5,14 +5,15 @@ import './styles.css';
 interface IButtonProps {
     title: string;
     showIcon: boolean;
+    onClick: () => any;
 }
 
 const PixelButton = (props: IButtonProps) => {
-    const {title, showIcon} = props;
+    const {title, showIcon, onClick} = props;
 
     const icon = <IconNotebook size={25} />;
     return (
-        <Button justify='center' leftSection={showIcon && icon} className='pixel-button'>
+        <Button justify='center' leftSection={showIcon && icon} className='pixel-button' onClick={onClick}>
             {title}
         </Button>
     )
