@@ -19,9 +19,14 @@ const DiaryPage = () => {
     ]
 
     const expandMonth = (year: string, month: string) => {
-        setSelectedMonth(month);
-        setSelectedYear(year);
-        fetchFiles(year, month);
+        if (selectedMonth === month && selectedYear === year) {
+            setSelectedMonth('');
+            setSelectedYear('');
+        } else {
+            setSelectedMonth(month);
+            setSelectedYear(year);
+            fetchFiles(year, month);
+        }
     }
 
     const fetchFiles = (year: string, month: string) => {
@@ -29,7 +34,8 @@ const DiaryPage = () => {
         fetch(path) // A JSON file containing a list of filenames
             .then(res => res.json())
             .then(files => {
-                const dateItems = files.map((json: any) => json.replace('.json', '')).filter((json: any) => json !== '.DS_Store').sort();
+                const dateItems = files.map((json: any) => json.replace('.json', '')).filter((json: any) => json !== '.DS_Store').sort((a: string, b: string) =>  new Date(a).getTime() - new Date(b).getTime());
+
                 setDateItems(dateItems)
             })
             .catch(error => console.error('Error loading JSON:', error));

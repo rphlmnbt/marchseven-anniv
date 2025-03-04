@@ -7,6 +7,9 @@
 }
 
 .table-of-contents {
+    height: calc(100vh - 72px);
+    max-height: calc(100vh - 72px);
+    overflow-y: scroll;
     margin: 36px;
     padding: 16px;
     background-color: #dfdccb;
@@ -16,17 +19,17 @@
 
 .table-of-contents-title {
     text-align: center;
-    font-size: 24px;
+    font-size: 30px;
     font-weight: 500;
 }
 
 .mantine-List-itemLabel {
-    font-size: 20px !important;
+    font-size: 24px !important;
     cursor: default;
 }
 
 .month-item div .mantine-List-itemLabel {
-    font-size: 20px !important;
+    font-size: 24px !important;
     cursor: pointer;
 }
 
