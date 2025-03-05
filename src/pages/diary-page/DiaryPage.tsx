@@ -1,9 +1,11 @@
-import { Grid, GridCol, List, ListItem, ThemeIcon } from '@mantine/core';
+import { Grid, GridCol, List, ListItem } from '@mantine/core';
 import './styles.css';
-import { use, useState } from 'react';
+import { useState } from 'react';
 import { IconCornerDownRight } from '@tabler/icons-react';
 import PixelButton from '../../components/pixel-button/PixelButton';
 import { useNavigate } from 'react-router';
+import clickSfx from '../../assets/sounds/click.wav';
+import useSound from 'use-sound';
 
 const DiaryPage = () => {
     const [dateItems, setDateItems] = useState<any[]>([]);
@@ -11,6 +13,8 @@ const DiaryPage = () => {
     const [selectedYear, setSelectedYear] = useState<string>('');
     const [contentTitle, setContentTitle] = useState<string>('Select a Diary Entry');
     const [contentBody, setContentBody] = useState<string>('');
+
+    const [playClick] = useSound(clickSfx);
 
     const navigate = useNavigate();
 
@@ -26,6 +30,7 @@ const DiaryPage = () => {
     ]
 
     const expandMonth = (year: string, month: string) => {
+        playClick();
         setDateItems([]);
         if (selectedMonth === month && selectedYear === year) {
             setSelectedMonth('');
@@ -49,6 +54,7 @@ const DiaryPage = () => {
     }
 
     const fetchContent = (date: string) => {
+        playClick();
         const path = `/letters/${selectedYear}/${selectedMonth}/${date}.json`;
         fetch(path) // A JSON file containing a list of filenames
             .then(res => res.json())
@@ -58,6 +64,11 @@ const DiaryPage = () => {
                 setContentBody(content.textContent)
             })
             .catch(error => console.error('Error loading JSON:', error));
+    }
+
+    const navigateBack = () => {
+        playClick();
+        navigate('/');
     }
     return (
         <div className='background-pink center'>
@@ -115,7 +126,7 @@ const DiaryPage = () => {
                             </div>
                         </div>
                         <div className='diary-content-footer'>
-                            <PixelButton title='back' showIcon={true} onClick={() => {navigate('/')}}/>
+                            <PixelButton title='back' showIcon={true} onClick={navigateBack}/>
                         </div>
                     </GridCol>
                 </Grid>
