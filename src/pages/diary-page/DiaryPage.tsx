@@ -1,11 +1,18 @@
-import { Grid, GridCol, List, ListItem } from '@mantine/core';
+import { Grid, GridCol, List, ListItem, ThemeIcon } from '@mantine/core';
 import './styles.css';
-import { useState } from 'react';
+import { use, useState } from 'react';
+import { IconCornerDownRight } from '@tabler/icons-react';
+import PixelButton from '../../components/pixel-button/PixelButton';
+import { useNavigate } from 'react-router';
 
 const DiaryPage = () => {
     const [dateItems, setDateItems] = useState<any[]>([]);
     const [selectedMonth, setSelectedMonth] = useState<string>('');
     const [selectedYear, setSelectedYear] = useState<string>('');
+    const [contentTitle, setContentTitle] = useState<string>('Select a Diary Entry');
+    const [contentBody, setContentBody] = useState<string>('');
+
+    const navigate = useNavigate();
 
     const tableOfContents = [
         {
@@ -19,6 +26,7 @@ const DiaryPage = () => {
     ]
 
     const expandMonth = (year: string, month: string) => {
+        setDateItems([]);
         if (selectedMonth === month && selectedYear === year) {
             setSelectedMonth('');
             setSelectedYear('');
@@ -35,11 +43,21 @@ const DiaryPage = () => {
             .then(res => res.json())
             .then(files => {
                 const dateItems = files.map((json: any) => json.replace('.json', '')).filter((json: any) => json !== '.DS_Store').sort((a: string, b: string) =>  new Date(a).getTime() - new Date(b).getTime());
-
                 setDateItems(dateItems)
             })
             .catch(error => console.error('Error loading JSON:', error));
+    }
 
+    const fetchContent = (date: string) => {
+        const path = `/letters/${selectedYear}/${selectedMonth}/${date}.json`;
+        fetch(path) // A JSON file containing a list of filenames
+            .then(res => res.json())
+            .then(content => {
+                console.log(content)
+                setContentTitle(content.title)
+                setContentBody(content.textContent)
+            })
+            .catch(error => console.error('Error loading JSON:', error));
     }
     return (
         <div className='background-pink center'>
@@ -56,7 +74,13 @@ const DiaryPage = () => {
                                     return (
                                         <div>
                                             <ListItem>{year.year}</ListItem>
-                                            <List withPadding>
+                                            <List 
+                                                withPadding
+                                                icon={
+                                                    <IconCornerDownRight size={20} />
+                                                  }
+                                            
+                                            >
                                                 {year.months.map((month) => {
                                                     return (
                                                         <div>
@@ -64,9 +88,8 @@ const DiaryPage = () => {
                                                             {selectedMonth === month && selectedYear === year.year && (
                                                                 <List withPadding>
                                                                     {dateItems.map((date) => {
-                                                                        console.log(date)
                                                                         return (
-                                                                            <ListItem>{date}</ListItem>
+                                                                            <ListItem className='month-item' onClick={() => fetchContent(date)}>{date}</ListItem>
                                                                         )
                                                                     })}
                                                                 </List>
@@ -83,8 +106,16 @@ const DiaryPage = () => {
                         </div>
                     </GridCol>
                     <GridCol span={8}>
-                        <div>
-                            CONTENT
+                        <div className='diary-content'>
+                            <div className='diary-content-title'>
+                                {contentTitle}
+                            </div>
+                            <div className='diary-content-body'>
+                                {contentBody}
+                            </div>
+                        </div>
+                        <div className='diary-content-footer'>
+                            <PixelButton title='back' showIcon={true} onClick={() => {navigate('/')}}/>
                         </div>
                     </GridCol>
                 </Grid>
