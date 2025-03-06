@@ -1,6 +1,7 @@
 {
   "name": "marchseven-anniv",
   "private": true,
+  "homepage": "https://rphlmnbt.github.io/marchseven-anniv/",
   "version": "0.0.0",
   "type": "module",
   "scripts": {
