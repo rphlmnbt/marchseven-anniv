@@ -5,6 +5,7 @@ import { IconCornerDownRight } from '@tabler/icons-react';
 import PixelButton from '../../components/pixel-button/PixelButton';
 import { useNavigate } from 'react-router';
 import clickSfx from '../../assets/sounds/click.wav';
+import bgm from '../../assets/sounds/bgm.mp3'
 import useSound from 'use-sound';
 
 const DiaryPage = () => {
@@ -13,8 +14,10 @@ const DiaryPage = () => {
     const [selectedYear, setSelectedYear] = useState<string>('');
     const [contentTitle, setContentTitle] = useState<string>('Select a Diary Entry');
     const [contentBody, setContentBody] = useState<string>('');
+    const [isSoundPlaying, setIsSoundPlaying] = useState<boolean>(false);
 
     const [playClick] = useSound(clickSfx);
+    const [playBGM, { stop }] = useSound(bgm, { volume: 0.75 });
 
     const navigate = useNavigate();
 
@@ -69,6 +72,18 @@ const DiaryPage = () => {
     const navigateBack = () => {
         playClick();
         navigate('/');
+    }
+
+    const playSound = () => {
+        if (isSoundPlaying === false) {
+            playClick();
+            playBGM();
+            setIsSoundPlaying(true);
+        } else {
+            playClick();
+            stop();
+            setIsSoundPlaying(false);
+        }
     }
     return (
         <div className='background-pink center'>
@@ -126,7 +141,9 @@ const DiaryPage = () => {
                             </div>
                         </div>
                         <div className='diary-content-footer'>
-                            <PixelButton title='back' showIcon={true} onClick={navigateBack}/>
+                            <PixelButton title='play sound' showIcon={true} onClick={playSound} icon={isSoundPlaying ? 'soundOff' : 'soundOn'}/>
+                            <span style={{paddingRight: '8px'}} />
+                            <PixelButton title='back' showIcon={true} onClick={navigateBack} icon='back'/>
                         </div>
                     </GridCol>
                 </Grid>
