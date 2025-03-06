@@ -43,7 +43,7 @@ const DiaryPage = () => {
     }
 
     const fetchFiles = (year: string, month: string) => {
-        const path = `/letters/${year}/${month}/files.json`;
+        const path = `${import.meta.env.BASE_URL}letters/${year}/${month}/files.json`;
         fetch(path) // A JSON file containing a list of filenames
             .then(res => res.json())
             .then(files => {
@@ -55,7 +55,7 @@ const DiaryPage = () => {
 
     const fetchContent = (date: string) => {
         playClick();
-        const path = `/letters/${selectedYear}/${selectedMonth}/${date}.json`;
+        const path = `${import.meta.env.BASE_URL}letters/${selectedYear}/${selectedMonth}/${date}.json`;
         fetch(path) // A JSON file containing a list of filenames
             .then(res => res.json())
             .then(content => {
