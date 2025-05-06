@@ -27,7 +27,7 @@ const DiaryPage = () => {
             months: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
         }, {
             year: '2025',
-            months: ['January', 'February', 'March']
+            months: ['January', 'February', 'March', 'April', 'May']
         }
 
     ]
